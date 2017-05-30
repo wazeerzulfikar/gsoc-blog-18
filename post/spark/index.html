@@ -1,0 +1,137 @@
+    <!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="author" content="Wazeer Zulfikar">
+		<meta name="description" content="Native R API for Tensorflow">
+		<meta name="generator" content="Hugo 0.21" />
+		<title>The Spark &middot; Wazeer Zulfikar</title>
+		<link rel="shortcut icon" href="http://wazeerzulfikar.github.io/gsoc-blog/images/favicon.ico">
+		<link rel="stylesheet" href="http://wazeerzulfikar.github.io/gsoc-blog/css/style.css">
+		<link rel="stylesheet" href="http://wazeerzulfikar.github.io/gsoc-blog/css/highlight.css">
+		
+
+		
+		<link rel="stylesheet" href="http://wazeerzulfikar.github.io/gsoc-blog/css/font-awesome.min.css">
+		
+
+		
+	</head>
+
+    <body>
+       <nav class="main-nav">
+	
+	
+		<a href='http://wazeerzulfikar.github.io/gsoc-blog/'> <span class="arrow">←</span>Home</a>
+	
+	<a href='http://wazeerzulfikar.github.io/gsoc-blog/post'>Archive</a>
+	<a href='http://wazeerzulfikar.github.io/gsoc-blog/tags'>Tags</a>
+	<a href='http://wazeerzulfikar.github.io/gsoc-blog/about'>About</a>
+
+	
+
+	
+</nav>
+
+
+        <section id="wrapper">
+            <article class="post">
+                <header>
+                    <h1>
+                        The Spark
+                    </h1>
+                    <h2 class="headline">
+                    May 30, 2017 22:02
+                    · 405 words
+                    · 2 minutes read
+                      <span class="tags">
+                      
+                      </span>
+                    </h2>
+                </header>
+                
+                <section id="post-body">
+                    <p>Google Summer of Code! The summer just got better!</p>
+
+<p>Having worked with Tensorflow for quite some time, I was impressed by how amazing the library was, well not a surprise
+as it is being backed by Google! Thats when I noticed that though the core of the Tensorflow architecture is written in C++ and exposed through a C API, only Python has a complete wrapper which  users could easily use to design neural nets. And there lies R, most commonly used for handling Big Data. How would it be if the Data Scientists could easily use Tensorflow to directly implement machine learning algorithms on the Data they handle! Wouldn’t that be awesome?</p>
+
+<p>Well, that is exactly what I proposed to the R Project for Statistical Computing. Considering that I did get accepted, I guess they also liked the idea :)</p>
+
+<p>RStudio has actually wrapped Tensorflow already, but it is over the Python API. What makes my project different is that I am planning to wrap the C API, the core, directly. This is how Tensorflow recommends that language bindings be implemented. Interfacing directly with the core code has a lot of advantages such as removing the Python middleman improving stability, being easier to deploy and the fact that there is lesser overhead for calling any function.</p>
+
+<p>Rcpp, a foreign function interface, allows for seamless integration of R and C++. Now thats a tool that will come in handy. According to the Tensorflow folks, a complete client language, like Python, must provide the following functionalities:</p>
+
+<ul>
+<li>Run a Predefined Graph</li>
+<li>Graph Construction</li>
+<li>Gradients (Automatic Differentiation)</li>
+<li>Subgraphs as Functions</li>
+<li>A Neural Network Library</li>
+</ul>
+
+<p>The minimum requirement for a language binding is to support running a predefined graph and graph construction. The C API currently supports the above two minimum functionalities along with a recently added untested version of Gradients. My plan is to wrap whatever is available in the C API (satisfies minimum requirements) and then write the missing bits from Python to R, in the next phase.</p>
+
+<p>As you might have guessed, this is neither a one summer project nor a one man project. What I plan to do is provide a basic working prototype, by the end of this Summer, which can act as a foundation for enthusiastic developers. It can even be continued as future GSoC projects.</p>
+
+<p>Hopefully, one day, an R developer can use Tensorflow with the same ease as a Python one :)</p>
+
+                </section>
+            </article>
+
+            
+
+            
+
+            
+
+            <footer id="footer">
+    
+        <div id="social">
+
+	
+	
+    <a class="symbol" href="your_facebook_link">
+        <i class="fa fa-facebook-square"></i>
+    </a>
+    
+    <a class="symbol" href="http://www.github.com/wazeerzulfikar">
+        <i class="fa fa-github-square"></i>
+    </a>
+    
+    <a class="symbol" href="your_twitter_link">
+        <i class="fa fa-twitter-square"></i>
+    </a>
+    
+
+
+</div>
+
+    
+    <p class="small">
+    
+       © Copyright 2017 <i class="fa fa-heart" aria-hidden="true"></i> Wazeer Zulfikar
+    
+    </p>
+    <p class="small">
+        Powered by <a href="http://www.gohugo.io/">Hugo</a> Theme By <a href="https://github.com/nodejh/hugo-theme-cactus-plus">nodejh</a>
+    </p>
+</footer>
+
+        </section>
+
+        <script src="http://wazeerzulfikar.github.io/gsoc-blog/js/jquery-2.2.4.min.js"></script>
+<script src="http://wazeerzulfikar.github.io/gsoc-blog/js/main.js"></script>
+<script src="http://wazeerzulfikar.github.io/gsoc-blog/js/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+
+
+
+
+
+    </body>
+</html>
