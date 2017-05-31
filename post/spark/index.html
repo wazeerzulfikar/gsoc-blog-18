@@ -44,8 +44,8 @@
                     </h1>
                     <h2 class="headline">
                     May 30, 2017 22:02
-                    · 405 words
-                    · 2 minutes read
+                    · 638 words
+                    · 3 minutes read
                       <span class="tags">
                       
                       </span>
@@ -53,30 +53,84 @@
                 </header>
                 
                 <section id="post-body">
-                    <p>Google Summer of Code! The summer just got better!</p>
+                    <p><img src="https://developers.google.com/open-source/gsoc/images/gsoc2016-sun-373x373.png" alt="Drawing" style="width: 50px;height: 50px;"/></p>
+
+<p>Google Summer of Code! The summer just got better!</p>
 
 <p>Having worked with Tensorflow for quite some time, I was impressed by how amazing the library was, well not a surprise
-as it is being backed by Google! Thats when I noticed that though the core of the Tensorflow architecture is written in C++ and exposed through a C API, only Python has a complete wrapper which  users could easily use to design neural nets. And there lies R, most commonly used for handling Big Data. How would it be if the Data Scientists could easily use Tensorflow to directly implement machine learning algorithms on the Data they handle! Wouldn’t that be awesome?</p>
+as it is being backed by Google! Thats when I noticed that though the core of the Tensorflow architecture is written in C++ and exposed through a C API, only Python has a complete wrapper which  users could easily use to design neural nets. And there lies R, most commonly used for handling large amounts of data. How would it be if the Data Scientists could easily use Tensorflow to directly implement efficient machine learning algorithms on the sata they handle! Wouldn’t that be awesome?</p>
 
 <p>Well, that is exactly what I proposed to the R Project for Statistical Computing. Considering that I did get accepted, I guess they also liked the idea :)</p>
 
 <p>RStudio has actually wrapped Tensorflow already, but it is over the Python API. What makes my project different is that I am planning to wrap the C API, the core, directly. This is how Tensorflow recommends that language bindings be implemented. Interfacing directly with the core code has a lot of advantages such as removing the Python middleman improving stability, being easier to deploy and the fact that there is lesser overhead for calling any function.</p>
 
-<p>Rcpp, a foreign function interface, allows for seamless integration of R and C++. Now thats a tool that will come in handy. According to the Tensorflow folks, a complete client language, like Python, must provide the following functionalities:</p>
+<p>Rcpp, a foreign function interface, allows for seamless integration of R and C++. Now that is a tool that will come in handy. According to the Tensorflow folks, a complete client language, like Python, must provide the following functionalities:</p>
 
-<ul>
-<li>Run a Predefined Graph</li>
-<li>Graph Construction</li>
-<li>Gradients (Automatic Differentiation)</li>
-<li>Subgraphs as Functions</li>
-<li>A Neural Network Library</li>
-</ul>
+<p><strong>1. Run a Predefined Graph</strong> : Given a GraphDef (or MetaGraphDef) protocol message, be able to create a session, run queries, and get tensor results. This is sufficient for a mobile app or server that wants to run inference on a pre-trained model.</p>
+
+<p><strong>2. Graph Construction</strong> : At least one function per defined TensorFlow op that adds an operation to the graph. Ideally these functions would be automatically generated so they stay in sync as the op definitions are modified.</p>
+
+<p><strong>3. Gradients (Automatic Differentiation)</strong> : Given a graph and a list of input and output operations, add operations to the graph that compute the partial deriviatives (gradients) of the inputs with respect to the outputs. Allows for customization of the gradient function for a particular operation in the graph.</p>
+
+<p><strong>4. Subgraphs as Functions</strong> : Define a subgraph that may be called in multiple places in the main GraphDef. Defines a FunctionDefin the FunctionDefLibrary included in a GraphDef.</p>
+
+<p><strong>5. Control Flow</strong> : Construct &ldquo;If&rdquo; and &ldquo;While&rdquo; with user-specified subgraphs. Ideally these work with gradients.</p>
+
+<p><strong>6. A Neural Network Library</strong> : A number of components that together support the creation of neural network models and training them (possibly in a distributed setting).</p>
 
 <p>The minimum requirement for a language binding is to support running a predefined graph and graph construction. The C API currently supports the above two minimum functionalities along with a recently added untested version of Gradients. My plan is to wrap whatever is available in the C API (satisfies minimum requirements) and then write the missing bits from Python to R, in the next phase.</p>
 
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th align="center">Python</th>
+<th align="right">C</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>Run a predefined graph</td>
+<td align="center">tf.import_graph_def, tf.Session</td>
+<td align="right">TF_GraphImportGraphDef, TF_NewSession</td>
+</tr>
+
+<tr>
+<td>Graph construction with generated op functions</td>
+<td align="center">Yes</td>
+<td align="right">Yes (The C API supports client languages that do this)</td>
+</tr>
+
+<tr>
+<td>Gradients</td>
+<td align="center">tf.gradients</td>
+<td align="right">Yes (Untested)</td>
+</tr>
+
+<tr>
+<td>Functions</td>
+<td align="center">tf.python.framework.function.Defun</td>
+<td align="right"></td>
+</tr>
+
+<tr>
+<td>Control Flow</td>
+<td align="center">tf.cond, tf.while_loop</td>
+<td align="right"></td>
+</tr>
+
+<tr>
+<td>Neural Network Library</td>
+<td align="center">tf.train, tf.nn, tf.contrib.layers, tf.contrib.slim</td>
+<td align="right"></td>
+</tr>
+</tbody>
+</table>
+
 <p>As you might have guessed, this is neither a one summer project nor a one man project. What I plan to do is provide a basic working prototype, by the end of this Summer, which can act as a foundation for enthusiastic developers. It can even be continued as future GSoC projects.</p>
 
-<p>Hopefully, one day, an R developer can use Tensorflow with the same ease as a Python one :)</p>
+<p>Hopefully, one day, an R user can use Tensorflow with the same ease as a Python one :)</p>
 
                 </section>
             </article>
