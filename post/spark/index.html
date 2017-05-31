@@ -64,7 +64,7 @@ as it is being backed by Google! Thats when I noticed that though the core of th
 
 <p>RStudio has actually wrapped Tensorflow already, but it is over the Python API. What makes my project different is that I am planning to wrap the C API, the core, directly. This is how Tensorflow recommends that language bindings be implemented. Interfacing directly with the core code has a lot of advantages such as removing the Python middleman improving stability, being easier to deploy and the fact that there is lesser overhead for calling any function.</p>
 
-<p>Rcpp, a foreign function interface, allows for seamless integration of R and C++. Now that is a tool that will come in handy. According to the Tensorflow folks, a complete client language, like Python, must provide the following functionalities:</p>
+<p><em>Rcpp</em>, a foreign function interface, allows for seamless integration of R and C++. Now that is a tool that will come in handy. According to the Tensorflow folks, a complete client language, like Python, must provide the following functionalities:</p>
 
 <p><strong>1. Run a Predefined Graph</strong> : Given a GraphDef (or MetaGraphDef) protocol message, be able to create a session, run queries, and get tensor results. This is sufficient for a mobile app or server that wants to run inference on a pre-trained model.</p>
 
