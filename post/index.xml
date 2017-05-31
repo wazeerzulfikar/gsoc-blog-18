@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Posts on Wazeer Zulfikar</title>
-    <link>http://wazeerzulfikar.github.io/gsoc-blog/post/</link>
+    <link>/gsoc-blog/post/</link>
     <description>Recent content in Posts on Wazeer Zulfikar</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <lastBuildDate>Tue, 30 May 2017 22:02:44 +0530</lastBuildDate>
     
-	<atom:link href="http://wazeerzulfikar.github.io/gsoc-blog/post/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/gsoc-blog/post/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>The Spark</title>
-      <link>http://wazeerzulfikar.github.io/gsoc-blog/post/spark/</link>
+      <link>/gsoc-blog/post/spark/</link>
       <pubDate>Tue, 30 May 2017 22:02:44 +0530</pubDate>
       
-      <guid>http://wazeerzulfikar.github.io/gsoc-blog/post/spark/</guid>
+      <guid>/gsoc-blog/post/spark/</guid>
       <description>Google Summer of Code! The summer just got better!
 Having worked with Tensorflow for quite some time, I was impressed by how amazing the library was, well not a surprise as it is being backed by Google! Thats when I noticed that though the core of the Tensorflow architecture is written in C++ and exposed through a C API, only Python has a complete wrapper which users could easily use to design neural nets.</description>
     </item>
