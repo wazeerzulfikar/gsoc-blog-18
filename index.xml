@@ -18,7 +18,7 @@
       
       <guid>https://wazeerzulfikar.github.io/gsoc-blog/post/spark/</guid>
       <description>Google Summer of Code! The summer just got better!
-Having worked with Tensorflow for quite some time, I was impressed by how amazing the library was, well not a surprise as it is being backed by Google! Thats when I noticed that though the core of the Tensorflow architecture is written in C++ and exposed through a C API, only Python has a complete wrapper which users could easily use to design neural nets.</description>
+Having worked with Tensorflow for quite some time, I was impressed by how amazing the library was, well it&amp;rsquo;s not a surprise as it is being backed by Google! Thats when I noticed that though the core of the Tensorflow architecture is written in C++ and exposed through a C API, only Python has a complete wrapper which users could easily use to design neural nets.</description>
     </item>
     
   </channel>
