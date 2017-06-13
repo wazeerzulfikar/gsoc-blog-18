@@ -1,0 +1,150 @@
+    <!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="author" content="Wazeer Zulfikar">
+		<meta name="description" content="Native R API for Tensorflow">
+		<meta name="generator" content="Hugo 0.21" />
+		<title>Week 1 - The Scaffolding &middot; Wazeer Zulfikar</title>
+		<link rel="shortcut icon" href="https://wazeerzulfikar.github.io/gsoc-blog/images/favicon.ico">
+		<link rel="stylesheet" href="https://wazeerzulfikar.github.io/gsoc-blog/css/style.css">
+		<link rel="stylesheet" href="https://wazeerzulfikar.github.io/gsoc-blog/css/highlight.css">
+		
+
+		
+		<link rel="stylesheet" href="https://wazeerzulfikar.github.io/gsoc-blog/css/font-awesome.min.css">
+		
+
+		
+	</head>
+
+    <body>
+       <nav class="main-nav">
+	
+	
+		<a href='https://wazeerzulfikar.github.io/gsoc-blog/'> <span class="arrow">←</span>Blog Home</a>
+	
+	<a href='https://wazeerzulfikar.github.io/'> <span class="arrow">←</span>Home</a>
+	<a href='https://www.r-bloggers.com/'>R-Bloggers</a>
+	<a href='https://wazeerzulfikar.github.io/gsoc-blog/post'>Archive</a>
+	<a href='https://wazeerzulfikar.github.io/gsoc-blog/tags'>Tags</a>
+	<a href='https://wazeerzulfikar.github.io/#about/'>About</a>
+
+	
+
+	
+</nav>
+
+
+        <section id="wrapper">
+            <article class="post">
+                <header>
+                    <h1>
+                        Week 1 - The Scaffolding
+                    </h1>
+                    <h2 class="headline">
+                    Jun 10, 2017 12:02
+                    · 509 words
+                    · 3 minutes read
+                      <span class="tags">
+                      
+                      </span>
+                    </h2>
+                </header>
+                
+                <section id="post-body">
+                    <p>A week of the coding period has been completed. As any package which is made from scratch would require, the first step for this project was to build a scaffolding on which the crux of the package can be built on. The scaffolding of the package contains all the imports needed, namely:</p>
+
+<ul>
+<li>Rcpp, for seamless integration of C++ and R</li>
+<li>roxygen2, for generation of documentation in the form of Rd files</li>
+<li>testthat, to support unit tests for the package</li>
+</ul>
+
+<p></br>
+In addition to all the necessary components for a complete R package, namely /R, /man, /tests, Description and Namespace, a /src directory is needed where all the C++ files will reside, allowing the C++ functions to be exported.</p>
+
+<p>To actually wrap Tensorflow, we ran through multiple approaches. One way was to use the ProtoBuf files of Tensorflow and use a code generator to automatically generate headers and functions. After discussing with the lead developer of Rust wrapper for Tensorflow, Adam Crume, it was decided that protobufs may not be the best approach as generated proto code only helps marshal and unmarshal protos. So we decided to manually export Rcpp functions, and if possible later write a generator for automatically exporting them.</p>
+
+<p>After the scaffolding was built, I hard-coded a C++ function for a feed forward network to check the working of the Rcpp exports and its implementation. Once, the tests for these passed, I moved on to building the same feed forward network but now using Tensorflow graphs through the C API.</p>
+
+<p>Firsty, Tensorflow needs to installed from source so that the C API is exposed and can be #included in C++ files. Since the Tensorflow C API is built as a dynamically linked library and distributed as a shared object (.so) file, certain flags are needed to be set for the g++ compliler to find the library in the system.</p>
+
+<p>In the R package, a Makevars file needs to be written for setting the flags to customize the g++ compiler. For now, I have hardcoded the flags to accomodate the paths to the Tensorflow library on my machine specifically, something to generalise later on.</p>
+
+<p>Then, I moved onto the first major port of the C API, loading and running predefined graphs (Step 1 in the <a href="https://wazeerzulfikar.github.io/gsoc-blog/post/spark/">previous post </a>). I am working on first actually loading and running a predefined xor graph (made using Python) using the Tensorflow C API directly. The C API, I have noticed, is very low level. It is not made for user convenience but as a foundation for other languages to build wrappers on. As it is directly connected to the Distribution Master and DataFlow Executor, which in turn resides over the kernel, most functions like Session Running requires various specific parameters to be passed. Currently, I have successfully imported a graph and initialised a session associated with it. Now I am working on running the session, feeding inputs to the graph and fetching outputs from it. This would create a model around which I can build the interface for importing and running predefined graphs.</p>
+
+                </section>
+            </article>
+
+            
+
+            
+                <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'wzulfikar'; 
+
+     
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+
+            
+
+            
+
+            <footer id="footer">
+    
+        <div id="social">
+
+	
+	
+    <a class="symbol" href="your_facebook_link">
+        <i class="fa fa-facebook-square"></i>
+    </a>
+    
+    <a class="symbol" href="http://www.github.com/wazeerzulfikar">
+        <i class="fa fa-github-square"></i>
+    </a>
+    
+    <a class="symbol" href="your_twitter_link">
+        <i class="fa fa-twitter-square"></i>
+    </a>
+    
+
+
+</div>
+
+    
+    <p class="small">
+    
+       © Copyright 2017 <i class="fa fa-heart" aria-hidden="true"></i> Wazeer Zulfikar
+    
+    </p>
+    <p class="small">
+        Powered by <a href="http://www.gohugo.io/">Hugo</a> Theme By <a href="https://github.com/nodejh/hugo-theme-cactus-plus">nodejh</a>
+    </p>
+</footer>
+
+        </section>
+
+        <script src="https://wazeerzulfikar.github.io/gsoc-blog/js/jquery-2.2.4.min.js"></script>
+<script src="https://wazeerzulfikar.github.io/gsoc-blog/js/main.js"></script>
+<script src="https://wazeerzulfikar.github.io/gsoc-blog/js/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+
+
+
+
+
+    </body>
+</html>

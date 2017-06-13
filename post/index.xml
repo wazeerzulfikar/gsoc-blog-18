@@ -6,10 +6,20 @@
     <description>Recent content in Posts on Wazeer Zulfikar</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Tue, 30 May 2017 22:02:44 +0530</lastBuildDate>
+    <lastBuildDate>Sat, 10 Jun 2017 12:02:44 +0530</lastBuildDate>
     
 	<atom:link href="https://wazeerzulfikar.github.io/gsoc-blog/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Week 1 - The Scaffolding</title>
+      <link>https://wazeerzulfikar.github.io/gsoc-blog/post/first/</link>
+      <pubDate>Sat, 10 Jun 2017 12:02:44 +0530</pubDate>
+      
+      <guid>https://wazeerzulfikar.github.io/gsoc-blog/post/first/</guid>
+      <description>A week of the coding period has been completed. As any package which is made from scratch would require, the first step for this project was to build a scaffolding on which the crux of the package can be built on. The scaffolding of the package contains all the imports needed, namely:
+ Rcpp, for seamless integration of C++ and R roxygen2, for generation of documentation in the form of Rd files testthat, to support unit tests for the package   In addition to all the necessary components for a complete R package, namely /R, /man, /tests, Description and Namespace, a /src directory is needed where all the C++ files will reside, allowing the C++ functions to be exported.</description>
+    </item>
     
     <item>
       <title>The Spark</title>

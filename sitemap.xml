@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://wazeerzulfikar.github.io/gsoc-blog/post/first/</loc>
+    <lastmod>2017-06-10T12:02:44+05:30</lastmod>
+  </url>
+  
+  <url>
     <loc>https://wazeerzulfikar.github.io/gsoc-blog/post/spark/</loc>
     <lastmod>2017-05-30T22:02:44+05:30</lastmod>
   </url>
@@ -14,7 +19,7 @@
   
   <url>
     <loc>https://wazeerzulfikar.github.io/gsoc-blog/post/</loc>
-    <lastmod>2017-05-30T22:02:44+05:30</lastmod>
+    <lastmod>2017-06-10T12:02:44+05:30</lastmod>
     <priority>0</priority>
   </url>
   
@@ -25,13 +30,13 @@
   
   <url>
     <loc>https://wazeerzulfikar.github.io/gsoc-blog/</loc>
-    <lastmod>2017-05-30T22:02:44+05:30</lastmod>
+    <lastmod>2017-06-10T12:02:44+05:30</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://wazeerzulfikar.github.io/gsoc-blog/categories/y/</loc>
-    <lastmod>2017-05-30T22:02:44+05:30</lastmod>
+    <lastmod>2017-06-10T12:02:44+05:30</lastmod>
     <priority>0</priority>
   </url>
   
