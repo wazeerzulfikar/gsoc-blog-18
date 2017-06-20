@@ -6,10 +6,19 @@
     <description>Recent content in Y on Wazeer Zulfikar</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Sat, 10 Jun 2017 12:02:44 +0530</lastBuildDate>
+    <lastBuildDate>Tue, 20 Jun 2017 12:45:44 +0530</lastBuildDate>
     
 	<atom:link href="https://wazeerzulfikar.github.io/gsoc-blog/categories/y/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Week 2 - Diving into the C API</title>
+      <link>https://wazeerzulfikar.github.io/gsoc-blog/post/second/</link>
+      <pubDate>Tue, 20 Jun 2017 12:45:44 +0530</pubDate>
+      
+      <guid>https://wazeerzulfikar.github.io/gsoc-blog/post/second/</guid>
+      <description>In the previous update, I had successfully loaded a predefined graph (feed forward network) and instantiated a session with the loaded graph. Well, now I have run the graph, fed inputs and fetched outputs from the predefined network. The input was hardcoded so as to allow no room for error from that side. Running a session for the first time using the C API, essentially almost directly on the underlying kernel, was indeed a tedious task.</description>
+    </item>
     
     <item>
       <title>Week 1 - The Scaffolding</title>

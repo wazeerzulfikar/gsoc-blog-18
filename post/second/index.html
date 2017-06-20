@@ -7,7 +7,7 @@
 		<meta name="author" content="Wazeer Zulfikar">
 		<meta name="description" content="Native R API for Tensorflow">
 		<meta name="generator" content="Hugo 0.21" />
-		<title>Week 1 - The Scaffolding &middot; Wazeer Zulfikar</title>
+		<title>Week 2 - Diving into the C API &middot; Wazeer Zulfikar</title>
 		<link rel="shortcut icon" href="https://wazeerzulfikar.github.io/gsoc-blog/images/favicon.ico">
 		<link rel="stylesheet" href="https://wazeerzulfikar.github.io/gsoc-blog/css/style.css">
 		<link rel="stylesheet" href="https://wazeerzulfikar.github.io/gsoc-blog/css/highlight.css">
@@ -42,11 +42,11 @@
             <article class="post">
                 <header>
                     <h1>
-                        Week 1 - The Scaffolding
+                        Week 2 - Diving into the C API
                     </h1>
                     <h2 class="headline">
-                    Jun 10, 2017 12:02
-                    · 510 words
+                    Jun 20, 2017 12:45
+                    · 433 words
                     · 3 minutes read
                       <span class="tags">
                       
@@ -55,26 +55,15 @@
                 </header>
                 
                 <section id="post-body">
-                    <p>A week of the coding period has been completed. As any package which is made from scratch would require, the first step for this project was to build a scaffolding on which the crux of the package can be built on. The scaffolding of the package contains all the imports needed, namely:</p>
+                    <p>In the previous update, I had successfully loaded a predefined graph (feed forward network) and instantiated a session with the loaded graph. Well, now I have run the graph, fed inputs and fetched outputs from the predefined network. The input was hardcoded so as to allow no room for error from that side. Running a session for the first time using the C API, essentially almost directly on the underlying kernel, was indeed a tedious task. A separate vector was needed to be initialised for each of input, output and target operations. Another vector for each of them was also needed to store the corresponding operations as pointers to pointers. Even the length of each vector is passed as an argument to the function. Aside from the vectors the essential graph and status pointers need to be passed as well. Along with the above buffers for run options and metadata is needed. So you can see, lots of arguments!</p>
 
-<ul>
-<li>Rcpp, for seamless integration of C++ and R</li>
-<li>roxygen2, for generation of documentation in the form of Rd files</li>
-<li>testthat, to support unit tests for the package</li>
-</ul>
+<p>I realised, upon fetching the output, that the datatypes used and space allocated for every variable needs to be kept track of to ensure accurate results. Luckily, the tensorflow folks embedded a lot of accessors in the API, so that was convenient. I worked only with Int32 for now.</p>
 
-<p></br>
-In addition to all the necessary components for a complete R package, namely /R, /man, /tests, Description and Namespace, a /src directory is needed where all the C++ files will reside, allowing the C++ functions to be exported.</p>
+<p>For the first iteration of improved functionality, I added custom input. Since all the tensorfow operations work with Tensors defined using their interfaces, TF_NewTensor was handy to convert C++ arrays to Tensorflow Tensors. Here I faces an issue with the deallocator. While fixing that, is when I learnt the usages of malloc/free and new/delete. I converted all the malloc/free to new/delete for better memory allocation of the tensor objects, the only pitfall being needing to know the datatype beforehand.</p>
 
-<p>To actually wrap Tensorflow, we ran through multiple approaches. One way was to use the ProtoBuf files of Tensorflow and use a code generator to automatically generate headers and functions. After discussing with the lead developer of Rust wrapper for Tensorflow, Adam Crume, it was decided that protobufs may not be the best approach as generated proto code only helps marshal and unmarshal protos. So we decided to manually export Rcpp functions, and if possible later write a generator for automatically exporting them.</p>
+<p>With the import-run function working and after writing suitable tests, I started work with building graphs directly on the C API, from scratch. Again I was working on building the same feed forward network to maintain uniformity and easier testing. Every operation included a wrapper of its own. To initialise values into the constant operation, again the memory allocation needed to be taken care of. Building the graph worked successfully reproducing the results of the graph imported earlier, which had been built in Python.</p>
 
-<p>After the scaffolding was built, I hard-coded a C++ function for a feed forward network to check the working of the Rcpp exports and its implementation. Once, the tests for these passed, I moved on to building the same feed forward network but now using Tensorflow graphs through the C API.</p>
-
-<p>Firsty, Tensorflow needs to installed from source so that the C API is exposed and can be #included in C++ files. Since the Tensorflow C API is built as a dynamically linked library and distributed as a shared object (.so) file, certain flags are needed to be set for the g++ compliler to find the library in the system.</p>
-
-<p>In the R package, a Makevars file needs to be written for setting the flags to customize the g++ compiler. For now, I have hardcoded the flags to accomodate the paths to the Tensorflow library on my machine specifically, something to generalise later on.</p>
-
-<p>Then, I moved onto the first major port of the C API, loading and running predefined graphs (Step 1 in the <a href="https://wazeerzulfikar.github.io/gsoc-blog/post/spark/">previous post </a>). I am working on first actually loading and running a predefined feed-forward network graph (made using Python) using the Tensorflow C API directly. The C API, I have noticed, is very low level. It is not made for user convenience but as a foundation for other languages to build wrappers on. As it is directly connected to the Distribution Master and DataFlow Executor, which in turn resides over the kernel, most functions like Session Running requires various specific parameters to be passed. Currently, I have successfully imported a graph and initialised a session associated with it. Now I am working on running the session, feeding inputs to the graph and fetching outputs from it. This would create a model around which I can build the interface for importing and running predefined graphs.</p>
+<p>Next, I will be working on refactoring the code, breaking down the big graph-loading and graph-building functions by defining C++ interfaces for small functions with atomic functionalities. This will make it closer to the actual functions which will be exposed to the R users later on. Additionaly, I will be adding more test cases, to ensure I am on the right track.</p>
 
                 </section>
             </article>
