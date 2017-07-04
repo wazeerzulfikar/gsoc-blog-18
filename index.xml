@@ -6,13 +6,23 @@
     <description>Recent content on Wazeer Zulfikar</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Tue, 20 Jun 2017 12:45:44 +0530</lastBuildDate>
+    <lastBuildDate>Tue, 04 Jul 2017 11:10:13 +0530</lastBuildDate>
     
 	<atom:link href="https://wazeerzulfikar.github.io/gsoc-blog/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>Week 2 - Diving into the C API</title>
+      <title>Chapter 3 - Refactor, Test and Refactor</title>
+      <link>https://wazeerzulfikar.github.io/gsoc-blog/post/third/</link>
+      <pubDate>Tue, 04 Jul 2017 11:10:13 +0530</pubDate>
+      
+      <guid>https://wazeerzulfikar.github.io/gsoc-blog/post/third/</guid>
+      <description>Great News! Version 0.0.1 is closer to being ready!
+Having established that importing graphs and building them is now possible within R, it was time to refactor the code, to make it convenient for the users. Atomics functions need to be exposed so the User can import any graph in a systematic and understandable way and also be able to build any custom graph. The semantics need to be clear such that it is close to the convenient Python API of Tensorflow.</description>
+    </item>
+    
+    <item>
+      <title>Chapter 2 - Diving into the C API</title>
       <link>https://wazeerzulfikar.github.io/gsoc-blog/post/second/</link>
       <pubDate>Tue, 20 Jun 2017 12:45:44 +0530</pubDate>
       
@@ -21,7 +31,7 @@
     </item>
     
     <item>
-      <title>Week 1 - The Scaffolding</title>
+      <title>Chapter 1 - The Scaffolding</title>
       <link>https://wazeerzulfikar.github.io/gsoc-blog/post/first/</link>
       <pubDate>Sat, 10 Jun 2017 12:02:44 +0530</pubDate>
       
@@ -31,7 +41,7 @@
     </item>
     
     <item>
-      <title>The Spark</title>
+      <title>Prologue - The Spark</title>
       <link>https://wazeerzulfikar.github.io/gsoc-blog/post/spark/</link>
       <pubDate>Tue, 30 May 2017 22:02:44 +0530</pubDate>
       

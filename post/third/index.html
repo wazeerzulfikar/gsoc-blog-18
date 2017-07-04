@@ -7,7 +7,7 @@
 		<meta name="author" content="Wazeer Zulfikar">
 		<meta name="description" content="Native R API for Tensorflow">
 		<meta name="generator" content="Hugo 0.21" />
-		<title>Chapter 1 - The Scaffolding &middot; Wazeer Zulfikar</title>
+		<title>Chapter 3 - Refactor, Test and Refactor &middot; Wazeer Zulfikar</title>
 		<link rel="shortcut icon" href="https://wazeerzulfikar.github.io/gsoc-blog/images/favicon.ico">
 		<link rel="stylesheet" href="https://wazeerzulfikar.github.io/gsoc-blog/css/style.css">
 		<link rel="stylesheet" href="https://wazeerzulfikar.github.io/gsoc-blog/css/highlight.css">
@@ -42,12 +42,12 @@
             <article class="post">
                 <header>
                     <h1>
-                        Chapter 1 - The Scaffolding
+                        Chapter 3 - Refactor, Test and Refactor
                     </h1>
                     <h2 class="headline">
-                    Jun 10, 2017 12:02
-                    · 510 words
-                    · 3 minutes read
+                    Jul 4, 2017 11:10
+                    · 393 words
+                    · 2 minutes read
                       <span class="tags">
                       
                       </span>
@@ -55,26 +55,19 @@
                 </header>
                 
                 <section id="post-body">
-                    <p>A week of the coding period has been completed. As any package which is made from scratch would require, the first step for this project was to build a scaffolding on which the crux of the package can be built on. The scaffolding of the package contains all the imports needed, namely:</p>
+                    <p>Great News! Version 0.0.1 is closer to being ready!</p>
 
-<ul>
-<li>Rcpp, for seamless integration of C++ and R</li>
-<li>roxygen2, for generation of documentation in the form of Rd files</li>
-<li>testthat, to support unit tests for the package</li>
-</ul>
+<p>Having established that importing graphs and building them is now possible within R, it was time to refactor the code, to make it convenient for the users. Atomics functions need to be exposed so the User can import any graph in a systematic and understandable way and also be able to build any custom graph. The semantics need to be clear such that it is close to the convenient Python API of Tensorflow.</p>
 
-<p></br>
-In addition to all the necessary components for a complete R package, namely /R, /man, /tests, Description and Namespace, a /src directory is needed where all the C++ files will reside, allowing the C++ functions to be exported.</p>
+<p>Before breaking down the big functions, I added extensive unit tests. This will allow me to add a checkpoint after every stage of enhancement added to the code. Many functions such as setting the input nodes, feeding input to them, indentifying the output nodes and fetching output tensors are common for graph importing and building. Adding all of them to a shared <code>utils.h</code> led to an efficient implementation. Global pointers allowed for shared variables. But global pointers need extra care as its shared memory. All the input vectors need to be wrapped in tensors, while new tensors are allocated where outputs will be stored.</p>
 
-<p>To actually wrap Tensorflow, we ran through multiple approaches. One way was to use the ProtoBuf files of Tensorflow and use a code generator to automatically generate headers and functions. After discussing with the lead developer of Rust wrapper for Tensorflow, Adam Crume, it was decided that protobufs may not be the best approach as generated proto code only helps marshal and unmarshal protos. So we decided to manually export Rcpp functions, and if possible later write a generator for automatically exporting them.</p>
+<p>Currently, I made an individual wrapper for the basic ops one would need to build neural nets. I wish to, in the future, make a more generic version where I can have a simple wrapper over the Rcpp routine for a more efficient and lesser code implementation.</p>
 
-<p>After the scaffolding was built, I hard-coded a C++ function for a feed forward network to check the working of the Rcpp exports and its implementation. Once, the tests for these passed, I moved on to building the same feed forward network but now using Tensorflow graphs through the C API.</p>
+<p>Also, I used templates to extend the datatype compatibility. The package now accords for <code>int32</code> and <code>double</code>. I extended it to only these two as R only uses these in most cases, occurences of <code>int16</code> and <code>float</code> are rare in R. This is a bit of a messy implementation, but it works. I will need to get back to this later.</p>
 
-<p>Firsty, Tensorflow needs to installed from source so that the C API is exposed and can be #included in C++ files. Since the Tensorflow C API is built as a dynamically linked library and distributed as a shared object (.so) file, certain flags are needed to be set for the g++ compliler to find the library in the system.</p>
+<p>The next step to get it closer to a CRAN package release was to have a configure script. I used autoconf to generate the macros. The script when run checks for the dependencies, mainly <code>libtensorflow.so</code> (Obviously :P), and updates the compiler flags suitably to enable the linker to the tensorflow library.</p>
 
-<p>In the R package, a Makevars file needs to be written for setting the flags to customize the g++ compiler. For now, I have hardcoded the flags to accomodate the paths to the Tensorflow library on my machine specifically, something to generalise later on.</p>
-
-<p>Then, I moved onto the first major port of the C API, loading and running predefined graphs (Step 1 in the <a href="https://wazeerzulfikar.github.io/gsoc-blog/post/spark/">previous post </a>). I am working on first actually loading and running a predefined feed-forward network graph (made using Python) using the Tensorflow C API directly. The C API, I have noticed, is very low level. It is not made for user convenience but as a foundation for other languages to build wrappers on. As it is directly connected to the Distribution Master and DataFlow Executor, which in turn resides over the kernel, most functions like Session Running requires various specific parameters to be passed. Currently, I have successfully imported a graph and initialised a session associated with it. Now I am working on running the session, feeding inputs to the graph and fetching outputs from it. This would create a model around which I can build the interface for importing and running predefined graphs.</p>
+<p>My plan next, is to handle the ops better through a unique name generator, update ReadMe for guidelines for easy usage and link gnulib havelib to the autoconf to enable searching of the Tensorflow library from any location in the host system. Excited about the first release :D</p>
 
                 </section>
             </article>
