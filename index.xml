@@ -18,7 +18,8 @@
       
       <guid>https://wazeerzulfikar.github.io/gsoc-blog/post/fourth/</guid>
       <description>As I was working through, I realised the API still did not look much like the Python API. Lots of enhancements can be made to the existing API.
-One of the important parts of the framework I worked on were the Ops, after all they constitute the elements of the graph. The following changes were made to Ops handling by rtensorflow : - Unique Name Generators : I made a unique string generator for reference to all the ops created in the working session.</description>
+One of the important parts of the framework I worked on were the Ops, after all they constitute the elements of the graph. The following changes were made to Ops handling by rtensorflow :
+ Unique Name Generators : I made a unique string generator for reference to all the ops created in the working session.</description>
     </item>
     
     <item>
