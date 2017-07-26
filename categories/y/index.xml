@@ -6,10 +6,19 @@
     <description>Recent content in Y on Wazeer Zulfikar</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Fri, 14 Jul 2017 10:22:13 +0530</lastBuildDate>
+    <lastBuildDate>Mon, 24 Jul 2017 21:38:43 +0530</lastBuildDate>
     
 	<atom:link href="https://wazeerzulfikar.github.io/gsoc-blog/categories/y/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Chapter 5 - Trainable Models</title>
+      <link>https://wazeerzulfikar.github.io/gsoc-blog/post/fifth/</link>
+      <pubDate>Mon, 24 Jul 2017 21:38:43 +0530</pubDate>
+      
+      <guid>https://wazeerzulfikar.github.io/gsoc-blog/post/fifth/</guid>
+      <description>Big feature update! So last week I started working on a new feature to add to tensorflow, loading saved models. This feature will allow an R user to not only load the protobuf graph from python but also load the weight and bias values. First I worked on a simple regressor (Python code available here). After successfully loading the graph, I was able to serve the model. Or in other words, feed my data and fetch outputs from it.</description>
+    </item>
     
     <item>
       <title>Chapter 4 - Essential Tweaks</title>

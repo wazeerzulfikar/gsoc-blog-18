@@ -1,0 +1,164 @@
+    <!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="author" content="Wazeer Zulfikar">
+		<meta name="description" content="Native R API for Tensorflow">
+		<meta name="generator" content="Hugo 0.21" />
+		<title>Chapter 5 - Trainable Models &middot; Wazeer Zulfikar</title>
+		<link rel="shortcut icon" href="https://wazeerzulfikar.github.io/gsoc-blog/images/favicon.ico">
+		<link rel="stylesheet" href="https://wazeerzulfikar.github.io/gsoc-blog/css/style.css">
+		<link rel="stylesheet" href="https://wazeerzulfikar.github.io/gsoc-blog/css/highlight.css">
+		
+
+		
+		<link rel="stylesheet" href="https://wazeerzulfikar.github.io/gsoc-blog/css/font-awesome.min.css">
+		
+
+		
+	</head>
+
+    <body>
+       <nav class="main-nav">
+	
+	
+		<a href='https://wazeerzulfikar.github.io/gsoc-blog/'> <span class="arrow">←</span>Blog Home</a>
+	
+	<a href='https://wazeerzulfikar.github.io/'> <span class="arrow">←</span>Home</a>
+	<a href='https://www.r-bloggers.com/'>R-Bloggers</a>
+	<a href='https://wazeerzulfikar.github.io/gsoc-blog/post'>Archive</a>
+	<a href='https://wazeerzulfikar.github.io/gsoc-blog/tags'>Tags</a>
+	<a href='https://wazeerzulfikar.github.io/#about/'>About</a>
+
+	
+
+	
+</nav>
+
+
+        <section id="wrapper">
+            <article class="post">
+                <header>
+                    <h1>
+                        Chapter 5 - Trainable Models
+                    </h1>
+                    <h2 class="headline">
+                    Jul 24, 2017 21:38
+                    · 547 words
+                    · 3 minutes read
+                      <span class="tags">
+                      
+                      </span>
+                    </h2>
+                </header>
+                
+                <section id="post-body">
+                    <p>Big feature update! So last week I started working on a new feature to add to tensorflow, loading saved models. This feature will allow an R user to not only load the protobuf graph from python but also load the weight and bias values. First I worked on a simple regressor (Python code available <a href="https://github.com/wazeerzulfikar/rtensorflow/blob/master/tests/regress.py">here</a>). After successfully loading the graph, I was able to serve the model. Or in other words, feed my data and fetch outputs from it.</p>
+
+<p>But, why stop there? So I pushed on and tried to further train the model as well. It worked. Inspite of not having stable functions to handle gradients in the C API, I was able to use gradients functions through previously saved models and loading them. For faciliting training, the trainable ops are sent to the session as target operations, unlike the usual output operations. Initially, the training feature had to be set explicitly while running the session, but I automated (implicitly checked) this later.</p>
+
+<p>Then I moved to a bigger and more complex model and dataset, namely Convolutional Neural Nets and the MNIST handwritten digits respectively. But before I could delve deeper, I had to take care of unknown dimensions in placeholders (The -1 dimension, for those who use NumPy). On preprocessing the data and feeding it to the model, the output dimensions was slightly off. I figured that it was because in an R multidimensional matrix (also called array), the shallowest dimensions are filled first, unlike in Python (where deepest dimension is filled first). A simple reverse of dimensions and a transposition of the nd matrix solved the problem. Not surprisingly, training of the CNN was feasible. A small snippet of the output is below :</p>
+
+<pre><code>&gt; output &lt;- check_mnist(&quot;./tests/saved-models/mnist-model/&quot;, &quot;../mnist_data/train.csv&quot;)
+Sucessfully instantiated session variables
+2017-07-26 22:09:20.575804: I tensorflow/cc/saved_model/loader.cc:226] Loading SavedModel from: ./tests/saved-models/mnist-model/
+2017-07-26 22:09:20.599068: I tensorflow/cc/saved_model/loader.cc:145] Restoring SavedModel bundle.
+2017-07-26 22:09:20.735830: I tensorflow/cc/saved_model/loader.cc:180] Running LegacyInitOp on SavedModel bundle.
+2017-07-26 22:09:20.738360: I tensorflow/cc/saved_model/loader.cc:274] Loading SavedModel: success. Took 162571 microseconds.
+
+[1] &quot;Data read successful&quot;
+
+Iter  1 ,  Cost= 39661.59,  Training Accuracy= 0.1328125 
+Iter  11 ,  Cost= 13616.89,  Training Accuracy= 0.4296875 
+Iter  21 ,  Cost= 5783.97,  Training Accuracy= 0.6640625 
+Iter  31 ,  Cost= 3996.494,  Training Accuracy= 0.734375 
+Iter  41 ,  Cost= 4015.983,  Training Accuracy= 0.7890625 
+Iter  51 ,  Cost= 3367.392,  Training Accuracy= 0.765625 
+Iter  61 ,  Cost= 3081.917,  Training Accuracy= 0.8359375 
+Iter  71 ,  Cost= 2018.533,  Training Accuracy= 0.859375 
+Iter  81 ,  Cost= 1984.596,  Training Accuracy= 0.875 
+Iter  91 ,  Cost= 3046.545,  Training Accuracy= 0.859375 
+Iter  101 ,  Cost= 1464.636,  Training Accuracy= 0.9375 
+...
+</code></pre>
+
+<p>I also made a critical feature addition of passing multiple output and target operations to the session to run it. The output is returned in a dictionary format with all the outputs of the output operations contained in it while running the session. The particular outputs in the returned dictionary can be referenced with the op name used a key.</p>
+
+<p>I also added a Vignette, <code>Introduction.Rmd</code>. This vignette explains (with an example each) how to load saved models, import and run protobuf graphs and build and run custom graphs in a detailed step by step manner.</p>
+
+<p>Next, I plan to allow multiple sessions to run simultaneously and test out the experimental gradients C API and see if building trainable models from R is possible.</p>
+
+                </section>
+            </article>
+
+            
+
+            
+                <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'wzulfikar'; 
+
+     
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+
+            
+
+            
+
+            <footer id="footer">
+    
+        <div id="social">
+
+	
+	
+    <a class="symbol" href="your_facebook_link">
+        <i class="fa fa-facebook-square"></i>
+    </a>
+    
+    <a class="symbol" href="http://www.github.com/wazeerzulfikar">
+        <i class="fa fa-github-square"></i>
+    </a>
+    
+    <a class="symbol" href="your_twitter_link">
+        <i class="fa fa-twitter-square"></i>
+    </a>
+    
+
+
+</div>
+
+    
+    <p class="small">
+    
+       © Copyright 2017 <i class="fa fa-heart" aria-hidden="true"></i> Wazeer Zulfikar
+    
+    </p>
+    <p class="small">
+        Powered by <a href="http://www.gohugo.io/">Hugo</a> Theme By <a href="https://github.com/nodejh/hugo-theme-cactus-plus">nodejh</a>
+    </p>
+</footer>
+
+        </section>
+
+        <script src="https://wazeerzulfikar.github.io/gsoc-blog/js/jquery-2.2.4.min.js"></script>
+<script src="https://wazeerzulfikar.github.io/gsoc-blog/js/main.js"></script>
+<script src="https://wazeerzulfikar.github.io/gsoc-blog/js/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+
+
+
+
+
+    </body>
+</html>
