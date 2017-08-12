@@ -6,10 +6,19 @@
     <description>Recent content in Y on Wazeer Zulfikar</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Mon, 24 Jul 2017 21:38:43 +0530</lastBuildDate>
+    <lastBuildDate>Fri, 04 Aug 2017 12:18:43 +0530</lastBuildDate>
     
 	<atom:link href="https://wazeerzulfikar.github.io/gsoc-blog/categories/y/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Chapter 6 - Open Source</title>
+      <link>https://wazeerzulfikar.github.io/gsoc-blog/post/sixth/</link>
+      <pubDate>Fri, 04 Aug 2017 12:18:43 +0530</pubDate>
+      
+      <guid>https://wazeerzulfikar.github.io/gsoc-blog/post/sixth/</guid>
+      <description>This phase of the project involved lesser work and definitely a breather compared to the previous 5 phases. I focused on another aspect of open source development. Open Source is not only meant for sharing code but allowing others to contribute as well. To make my package contributor friendly, I sat to follow the Google C++ style guidlines and the R guidlines by Hadley Wikham. This also provided better readibility for new users, making it easier for them to get started.</description>
+    </item>
     
     <item>
       <title>Chapter 5 - Trainable Models</title>
